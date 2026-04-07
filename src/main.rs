@@ -153,8 +153,13 @@ fn fov_meter_controller(
 
     if let Some(gamepad) = gamepads.iter().next() {
         let right_trigger = gamepad.get(GamepadButton::RightTrigger).unwrap_or(0.0);
+        if right_trigger != 0.0 {
+            rotation += right_trigger * speed;
+        }
         let left_trigger = gamepad.get(GamepadButton::LeftTrigger).unwrap_or(0.0);
-        rotation += (right_trigger - left_trigger) * speed;
+        if left_trigger != 0.0 {
+            rotation += left_trigger * speed;
+        }
     }
 
     if let Some(gamepad) = gamepads.iter().next() {
